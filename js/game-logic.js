@@ -72,16 +72,16 @@ const setPlayerMoves = (player, moveOneType, moveOneValue, moveTwoType, moveTwoV
 
 const getRoundWinner = (round) => {
   // accepts round number between 1-3 and returns the winning player e.g. 'Player One' 
-  if (round < 1 || round > 3) {
-    return null;
-  }
+  // if (round < 1 || round > 3) {
+  //   return null;
+  // }
 
-  // Check if types and values were assigned
-  const typesValid = validateTypes();
-  const valuesValid = validateValues();
-  if (!typesValid || !valuesValid) {
-    return null; 
-  }
+  // // Check if types and values were assigned
+  // const typesValid = validateTypes();
+  // const valuesValid = validateValues();
+  // if (!typesValid || !valuesValid) {
+  //   return null; 
+  // }
 
   // Store game globals
   const playerOneMoves = [
@@ -119,8 +119,13 @@ const getRoundWinner = (round) => {
     'Player Two': playerTwoMoves
   };
 
-  // Compare Move Types 
-  
+  // Compare Move Types for the round
+
+  // Moves by round
+  const playerOneMove = playerOneMoves[round - 1]; // { type, value }
+  const playerTwoMove = playerTwoMoves[round - 1]; // { type, value }
+
+  return rockPaperScissors(playerOneMove, playerTwoMove);
 
 }
 
@@ -150,7 +155,7 @@ const clearMoves = () => {
 
 
 
-// Helpers & Validation
+// Helpers & Validators
 const validateTypes = () => {
   const moveTypes = [
     playerOneMoveOneType,
@@ -187,4 +192,49 @@ const validateValues = () => {
   }
 
   return true;
+};
+
+const rockPaperScissors = (moveOne, moveTwo) => {
+  // Returns the winning player string based on the rules object, calls compareValues for a draw
+  const moveTypeOne = moveOne.type;
+  const moveTypeTwo = moveTwo.type;
+  const moveValueOne = moveOne.value;
+  const moveValueTwo = moveTwo.value;
+
+  // check if types & values were set
+  if (!moveTypeOne || !moveTypeTwo || !moveValueOne || !moveValueTwo) {
+    return null
+  }
+
+  // Define rules where true = win
+  const rules = {
+    'rock': {
+      'scissors': true
+    },
+    'paper': {
+      'rock': true
+    },
+    'scissors': {
+      'paper': true
+    }
+  };
+
+  if (rules[moveTypeOne][moveTypeTwo]) {
+    return 'Player One'
+  } else if (rules[moveTypeTwo][moveTypeOne]) {
+    return 'Player Two'
+  } else {
+    return compareValues(moveValueOne, moveValueTwo);
+  }
+};
+
+const compareValues = (valueOne, valueTwo) => {
+  // first argument represents player one's value, and 2nd arg for player two
+  if (valueOne > valueTwo) {
+    return 'Player One';
+  } else if (valueOne < valueTwo) {
+    return 'Player Two';
+  } else {
+    return 'Tie';
+  }
 }

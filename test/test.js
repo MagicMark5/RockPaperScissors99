@@ -188,7 +188,7 @@ describe('getRoundWinner() - Main Functionality', function() {
     playerOneMoveOneValue = 1;
     playerTwoMoveOneType = 'scissors';
     playerTwoMoveOneValue = 99;
-
+    console.log(getRoundWinner(1))
     should.equal(getRoundWinner(1), 'Player One');
   });
 
