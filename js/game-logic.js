@@ -19,40 +19,6 @@ let playerTwoMoveOneValue = undefined;
 let playerTwoMoveTwoValue = undefined;
 let playerTwoMoveThreeValue = undefined;
 
-const playerOneMoves = [
-    {
-      type: playerOneMoveOneType,
-      value: playerOneMoveOneValue
-    },
-    {
-      type: playerOneMoveTwoType,
-      value: playerOneMoveTwoValue
-    },
-    {
-      type: playerOneMoveThreeType,
-      value: playerOneMoveThreeValue
-    }
-];
-
-const playerTwoMoves = [
-  {
-    type: playerTwoMoveOneType,
-    value: playerTwoMoveOneValue
-  },
-  {
-    type: playerTwoMoveTwoType,
-    value: playerTwoMoveTwoValue
-  },
-  {
-    type: playerTwoMoveThreeType,
-    value: playerTwoMoveThreeValue
-  }
-];
-
-const playerMoves = {
-  'Player One': playerOneMoves,
-  'Player Two': playerTwoMoves
-}
 
 // Game Functions
 
@@ -63,14 +29,14 @@ const setPlayerMoves = (player, moveOneType, moveOneValue, moveTwoType, moveTwoV
   const valueArgs = [moveOneValue, moveTwoValue, moveThreeValue];
   let valueSum = 0;
 
-  // Check if rock, paper, and scissors were provided as strings
+  // Check if type arguments rock, paper, and scissors were provided as strings 
   for (const type of typeArgs) {
     if (!moveTypes.includes(type)) {
       return;
     }
   }
 
-  // Check if all 3 values are provided as numbers 1-99
+  // Check if all 3 value arguments are provided as numbers 1-99
   // and that their sum does not exceed 99
   for (const value of valueArgs) {
     valueSum += value; 
@@ -79,7 +45,7 @@ const setPlayerMoves = (player, moveOneType, moveOneValue, moveTwoType, moveTwoV
     }
   }
   
-    
+  // When checks pass set player global variables
   if (player === 'Player One') {
     // set move 1
     playerOneMoveOneType = moveOneType;
@@ -104,33 +70,59 @@ const setPlayerMoves = (player, moveOneType, moveOneValue, moveTwoType, moveTwoV
   
 }
 
-// const validateArgs = (args) => {
-//   // returns boolean if provided argument array contains
-//   // valid arguments for the setPlayerMoves function
+const getRoundWinner = (round) => {
+  // accepts round number between 1-3 and returns the winning player e.g. 'Player One' 
+  if (round < 1 || round > 3) {
+    return null;
+  }
 
-//   let valueSum = 0; // All three values should not sum to more than 99
+  // Check if types and values were assigned
+  const typesValid = validateTypes();
+  const valuesValid = validateValues();
+  if (!typesValid || !valuesValid) {
+    return null; 
+  }
 
-//   for (let i = 1; i < args.length; i++) {
-//     if (i % 2 === 0) {
-//       // even indexed arguments should be Values from 1-99
-//       if (typeof args[i] !== 'number') return false; 
-//       // increment the sum
-//       valueSum += args[i];
-//       // check the values
-//       if (args[i] < 1 || argument > 99 || valueSum > 99) {
-//         return false;
-//       }
-//     } else if (i % 2 !== 0) {
-//       // odd indexed arguments should be types of either 'rock', 'paper', 'scissors'
-//       const acceptedTypes = ['rock', 'paper', 'scissors'];
-//       if (!acceptedTypes.includes(argument)) {
-//         return false;
-//       }
-//     }
-//   }
+  // Store game globals
+  const playerOneMoves = [
+    {
+      type: playerOneMoveOneType,
+      value: playerOneMoveOneValue
+    },
+    {
+      type: playerOneMoveTwoType,
+      value: playerOneMoveTwoValue
+    },
+    {
+      type: playerOneMoveThreeType,
+      value: playerOneMoveThreeValue
+    }
+  ];
 
-//   return true
-// };
+  const playerTwoMoves = [
+    {
+      type: playerTwoMoveOneType,
+      value: playerTwoMoveOneValue
+    },
+    {
+      type: playerTwoMoveTwoType,
+      value: playerTwoMoveTwoValue
+    },
+    {
+      type: playerTwoMoveThreeType,
+      value: playerTwoMoveThreeValue
+    }
+  ];
+
+  const playerMoves = {
+    'Player One': playerOneMoves,
+    'Player Two': playerTwoMoves
+  };
+
+  // Compare Move Types 
+  
+
+}
 
 
 
@@ -154,4 +146,45 @@ const clearMoves = () => {
   playerTwoMoveOneValue = undefined;
   playerTwoMoveTwoValue = undefined;
   playerTwoMoveThreeValue = undefined;
+};
+
+
+
+// Helpers & Validation
+const validateTypes = () => {
+  const moveTypes = [
+    playerOneMoveOneType,
+    playerOneMoveTwoType, 
+    playerOneMoveThreeType,
+    playerTwoMoveOneType,
+    playerTwoMoveTwoType, 
+    playerTwoMoveThreeType
+  ];
+
+  for (const type of moveTypes) {
+    if (!type) {
+      return false; 
+    }
+  }
+
+  return true;
+};
+
+const validateValues = () => {
+  const moveValues = [
+    playerOneMoveOneValue,
+    playerOneMoveTwoValue, 
+    playerOneMoveThreeValue,
+    playerTwoMoveOneValue,
+    playerTwoMoveTwoValue, 
+    playerTwoMoveThreeValue
+  ];
+
+  for (const value of moveValues) {
+    if (!value) {
+      return false; 
+    }
+  }
+
+  return true;
 }
