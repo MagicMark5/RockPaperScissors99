@@ -72,16 +72,9 @@ const setPlayerMoves = (player, moveOneType, moveOneValue, moveTwoType, moveTwoV
 
 const getRoundWinner = (round) => {
   // accepts round number between 1-3 and returns the winning player e.g. 'Player One' 
-  // if (round < 1 || round > 3) {
-  //   return null;
-  // }
-
-  // // Check if types and values were assigned
-  // const typesValid = validateTypes();
-  // const valuesValid = validateValues();
-  // if (!typesValid || !valuesValid) {
-  //   return null; 
-  // }
+  if (round < 1 || round > 3) {
+    return null;
+  }
 
   // Store game globals
   const playerOneMoves = [
