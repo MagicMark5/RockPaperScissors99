@@ -2,19 +2,67 @@
 // and Values - a number (e.g. 1-99)
 
 // Types - Player One
-const playerOneMoveOneType = undefined;
-const playerOneMoveTwoType = undefined;
-const playerOneMoveThreeType = undefined;
+let playerOneMoveOneType = undefined;
+let playerOneMoveTwoType = undefined;
+let playerOneMoveThreeType = undefined;
 // Types - Player Two
-const playerTwoMoveOneType = undefined;
-const playerTwoMoveTwoType = undefined;
-const playerTwoMoveThreeType = undefined;
+let playerTwoMoveOneType = undefined;
+let playerTwoMoveTwoType = undefined;
+let playerTwoMoveThreeType = undefined;
 
 // Values - Player One
-const playerOneMoveOneValue = undefined;
-const playerOneMoveTwoValue = undefined;
-const playerOneMoveThreeValue = undefined;
+let playerOneMoveOneValue = undefined;
+let playerOneMoveTwoValue = undefined;
+let playerOneMoveThreeValue = undefined;
 // Values - Player Two
-const playerTwoMoveOneValue = undefined;
-const playerTwoMoveTwoValue = undefined;
-const playerTwoMoveThreeValue = undefined;
+let playerTwoMoveOneValue = undefined;
+let playerTwoMoveTwoValue = undefined;
+let playerTwoMoveThreeValue = undefined;
+
+const playerOneMoves = [
+    {
+      type: playerOneMoveOneType,
+      value: playerOneMoveOneValue
+    },
+    {
+      type: playerOneMoveTwoType,
+      value: playerOneMoveTwoValue
+    },
+    {
+      type: playerOneMoveThreeType,
+      value: playerOneMoveThreeValue
+    }
+];
+
+const playerTwoMoves = [
+  {
+    type: playerTwoMoveOneType,
+    value: playerTwoMoveOneValue
+  },
+  {
+    type: playerTwoMoveTwoType,
+    value: playerTwoMoveTwoValue
+  },
+  {
+    type: playerTwoMoveThreeType,
+    value: playerTwoMoveThreeValue
+  }
+];
+
+// Game Functions
+const setPlayerMoves = (player, moveOneType, moveOneValue, moveTwoType, moveTwoValue, moveThreeType, moveThreeValue) => {
+ 
+}
+
+
+
+
+const clearMoves = () => {
+  // Reset all globals to undefined 
+  
+  // for (let i = 0; i < playerOneMoves.length; i++) {
+  //   playerOneMoves[i].type = undefined;
+
+  // }
+  
+}
