@@ -76,7 +76,7 @@ const getRoundWinner = (round) => {
     return null;
   }
 
-  // Store game globals
+  // Store game globals in arrays so round number is tracked as index - 1
   const playerOneMoves = [
     {
       type: playerOneMoveOneType,
@@ -107,19 +107,11 @@ const getRoundWinner = (round) => {
     }
   ];
 
-  const playerMoves = {
-    'Player One': playerOneMoves,
-    'Player Two': playerTwoMoves
-  };
-
-  // Compare Move Types for the round
-
-  // Moves by round
+  // Compare Move Types for the round, then compare values if types match
   const playerOneMove = playerOneMoves[round - 1]; // { type, value }
   const playerTwoMove = playerTwoMoves[round - 1]; // { type, value }
 
   return rockPaperScissors(playerOneMove, playerTwoMove);
-
 }
 
 
@@ -147,46 +139,6 @@ const clearMoves = () => {
 };
 
 
-
-// Helpers & Validators
-const validateTypes = () => {
-  const moveTypes = [
-    playerOneMoveOneType,
-    playerOneMoveTwoType, 
-    playerOneMoveThreeType,
-    playerTwoMoveOneType,
-    playerTwoMoveTwoType, 
-    playerTwoMoveThreeType
-  ];
-
-  for (const type of moveTypes) {
-    if (!type) {
-      return false; 
-    }
-  }
-
-  return true;
-};
-
-const validateValues = () => {
-  const moveValues = [
-    playerOneMoveOneValue,
-    playerOneMoveTwoValue, 
-    playerOneMoveThreeValue,
-    playerTwoMoveOneValue,
-    playerTwoMoveTwoValue, 
-    playerTwoMoveThreeValue
-  ];
-
-  for (const value of moveValues) {
-    if (!value) {
-      return false; 
-    }
-  }
-
-  return true;
-};
-
 const rockPaperScissors = (moveOne, moveTwo) => {
   // Returns the winning player string based on the rules object, calls compareValues for a draw
   const moveTypeOne = moveOne.type;
@@ -212,6 +164,7 @@ const rockPaperScissors = (moveOne, moveTwo) => {
     }
   };
 
+  // Compare Move Types, then compare values if types match
   if (rules[moveTypeOne][moveTypeTwo]) {
     return 'Player One'
   } else if (rules[moveTypeTwo][moveTypeOne]) {
@@ -230,4 +183,36 @@ const compareValues = (valueOne, valueTwo) => {
   } else {
     return 'Tie';
   }
-}
+};
+
+const getGameWinner = () => {
+  // uses getRoundWinner for each round to determine game winner
+  // Start counters for player wins
+  let playerOneWins = 0;
+  let playerTwoWins = 0;
+  let ties = 0;
+
+  for (let round = 1; round <= 3; round++) {
+    let winner = getRoundWinner(round);
+    if (winner === 'Player One') {
+      playerOneWins++;
+    } else if (winner === 'Player Two') {
+      playerTwoWins++;
+    } else if (winner === null) {
+      // not all values were set if winner is null
+      return null;
+    } else {
+      ties++;
+    }
+  }
+
+  // Winner is declared based on most number of round wins
+  if (playerOneWins > playerTwoWins) {
+    return 'Player One';
+  } else if (playerOneWins < playerTwoWins) {
+    return 'Player Two';
+  } else {
+    return 'Tie';
+  }
+
+};
