@@ -243,7 +243,7 @@ const setComputerMoves = () => {
     // Every round from 1 - 3 push a move type and value to args array
     setPlayerMovesArgs.push(moveType);
     setPlayerMovesArgs.push(moveValue);
-  }
+  } // end for loop
 
   // Args (player, moveOneType, moveOneValue, moveTwoType, moveTwoValue, moveThreeType, moveThreeValue)
   setPlayerMoves(...setPlayerMovesArgs);
