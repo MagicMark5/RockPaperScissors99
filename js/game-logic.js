@@ -153,7 +153,7 @@ const rockPaperScissors = (moveOne, moveTwo) => {
     return null
   }
 
-  // Define rules where true = win
+  // Define rules where true = win for parent > child 
   const rules = {
     'rock': {
       'scissors': true
@@ -193,7 +193,7 @@ const getGameWinner = () => {
   let playerTwoWins = 0;
   let ties = 0;
   
-  // uses getRoundWinner for each round to determine game winner
+  // uses getRoundWinner for each round to determine game winner, and count wins
   for (let round = 1; round <= 3; round++) {
     let winner = getRoundWinner(round);
     if (winner === 'Player One') {
@@ -218,7 +218,7 @@ const getGameWinner = () => {
   }
 };
 
-// BONUS: setComputerMoves()
+// BONUS: setComputerMoves with random move types and values for all 3 rounds
 
 const setComputerMoves = () => {
   // Sets the move types and values for player two for all 3 rounds
