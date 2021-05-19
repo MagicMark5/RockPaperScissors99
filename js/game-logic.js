@@ -23,9 +23,8 @@ let playerTwoMoveThreeValue = undefined;
 const moveTypes = ['rock', 'paper', 'scissors'];
 
 
-// Game Functions
-
-const setPlayerMoves = (player, moveOneType, moveOneValue, moveTwoType, moveTwoValue, moveThreeType, moveThreeValue) => {
+const setPlayerMoves = (player, moveOneType, moveOneValue, moveTwoType, 
+                        moveTwoValue, moveThreeType, moveThreeValue) => {
   
   const typeArgs = [moveOneType, moveTwoType, moveThreeType];
   const valueArgs = [moveOneValue, moveTwoValue, moveThreeValue];
@@ -47,106 +46,55 @@ const setPlayerMoves = (player, moveOneType, moveOneValue, moveTwoType, moveTwoV
     }
   }
   
-  // When checks pass set player global variables
+  // When checks pass set player one or two global variables (types and values)
   if (player === 'Player One') {
-    // set move 1
     playerOneMoveOneType = moveOneType;
     playerOneMoveOneValue = moveOneValue;
-    // set move 2
     playerOneMoveTwoType = moveTwoType;
     playerOneMoveTwoValue = moveTwoValue;
-    // set move 3
     playerOneMoveThreeType = moveThreeType;
     playerOneMoveThreeValue = moveThreeValue;
   } else if (player === 'Player Two') {
-    // set move 1
     playerTwoMoveOneType = moveOneType;
     playerTwoMoveOneValue = moveOneValue;
-    // set move 2
     playerTwoMoveTwoType = moveTwoType;
     playerTwoMoveTwoValue = moveTwoValue;
-    // set move 3
     playerTwoMoveThreeType = moveThreeType;
     playerTwoMoveThreeValue = moveThreeValue;
   }
-  
 }
 
 const getRoundWinner = (round) => {
-  // accepts round number between 1-3 and returns the winning player e.g. 'Player One' 
-  if (round < 1 || round > 3) {
-    return null;
+  switch(round) {
+    case 1:
+      return rockPaperScissors(playerOneMoveOneType,
+                           playerOneMoveOneValue,
+                           playerTwoMoveOneType,
+                           playerTwoMoveOneValue);
+    case 2:
+      return rockPaperScissors(playerOneMoveTwoType,
+                           playerOneMoveTwoValue,
+                           playerTwoMoveTwoType,
+                           playerTwoMoveTwoValue);
+    case 3:
+      return rockPaperScissors(playerOneMoveThreeType,
+                           playerOneMoveThreeValue,
+                           playerTwoMoveThreeType,
+                           playerTwoMoveThreeValue);
+    default:
+      return null;
   }
-
-  // Store game globals in arrays so round number is tracked as index - 1
-  const playerOneMoves = [
-    {
-      type: playerOneMoveOneType,
-      value: playerOneMoveOneValue
-    },
-    {
-      type: playerOneMoveTwoType,
-      value: playerOneMoveTwoValue
-    },
-    {
-      type: playerOneMoveThreeType,
-      value: playerOneMoveThreeValue
-    }
-  ];
-
-  const playerTwoMoves = [
-    {
-      type: playerTwoMoveOneType,
-      value: playerTwoMoveOneValue
-    },
-    {
-      type: playerTwoMoveTwoType,
-      value: playerTwoMoveTwoValue
-    },
-    {
-      type: playerTwoMoveThreeType,
-      value: playerTwoMoveThreeValue
-    }
-  ];
-
-  // Compare Move Types for the round, then compare values if types match
-  const playerOneMove = playerOneMoves[round - 1]; // { type, value }
-  const playerTwoMove = playerTwoMoves[round - 1]; // { type, value }
-
-  return rockPaperScissors(playerOneMove, playerTwoMove);
 }
 
-
-
-const clearMoves = () => {
-  // Reset all globals to undefined 
-
-  // Types - Player One
-  playerOneMoveOneType = undefined;
-  playerOneMoveTwoType = undefined;
-  playerOneMoveThreeType = undefined;
-  // Types - Player Two
-  playerTwoMoveOneType = undefined;
-  playerTwoMoveTwoType = undefined;
-  playerTwoMoveThreeType = undefined;
-
-  // Values - Player One
-  playerOneMoveOneValue = undefined;
-  playerOneMoveTwoValue = undefined;
-  playerOneMoveThreeValue = undefined;
-  // Values - Player Two
-  playerTwoMoveOneValue = undefined;
-  playerTwoMoveTwoValue = undefined;
-  playerTwoMoveThreeValue = undefined;
-};
-
-
-const rockPaperScissors = (moveOne, moveTwo) => {
-  // Returns the winning player string based on the rules object, calls compareValues for a draw
-  const moveTypeOne = moveOne.type;
-  const moveTypeTwo = moveTwo.type;
-  const moveValueOne = moveOne.value;
-  const moveValueTwo = moveTwo.value;
+const rockPaperScissors = (playerOneMoveType,
+                          playerOneMoveValue,
+                          playerTwoMoveType,
+                          playerTwoMoveValue) => {
+  // Returns the winning player string based on the rules of rps, calls compareValues for a draw
+  const moveTypeOne = playerOneMoveType;
+  const moveTypeTwo = playerTwoMoveType;
+  const moveValueOne = playerOneMoveValue;
+  const moveValueTwo = playerTwoMoveValue;
 
   // check if types & values were set
   if (!moveTypeOne || !moveTypeTwo || !moveValueOne || !moveValueTwo) {
@@ -191,7 +139,6 @@ const getGameWinner = () => {
   // Start counters for player wins, increment each round
   let playerOneWins = 0;
   let playerTwoWins = 0;
-  let ties = 0;
   
   // uses getRoundWinner for each round to determine game winner, and count wins
   for (let round = 1; round <= 3; round++) {
@@ -203,8 +150,6 @@ const getGameWinner = () => {
     } else if (winner === null) {
       // not all values were set if winner is null
       return null;
-    } else {
-      ties++;
     }
   }
 
