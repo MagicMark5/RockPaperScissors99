@@ -221,32 +221,14 @@ const getGameWinner = () => {
 // BONUS: setComputerMoves with random move types and values for all 3 rounds
 
 const setComputerMoves = () => {
-  // Sets the move types and values for player two for all 3 rounds
-  const setPlayerMovesArgs = ['Player Two']; 
-  let valueSum = 0;
-
-  for (let round = 1; round <= 3; round++) {
-    // Pick random move type
-    const moveType = moveTypes[getRandomInt(3)]; // rock, paper or scissors (0, 1, or 2 index)
-    // Pick random move value between 1-99
-    let moveValue = getRandomInt(99) + 1; 
-    // increment valueSum and then check if > 99, and while it is, remove that value and try again
-    valueSum += moveValue;
-
-    while (valueSum > 99) {
-      valueSum -= moveValue;
-      // reassign the moveValue if it made valueSum > 99
-      moveValue = getRandomInt(99) + 1; 
-      valueSum += moveValue; 
-    }
-
-    // Every round from 1 - 3 push a move type and value to args array
-    setPlayerMovesArgs.push(moveType);
-    setPlayerMovesArgs.push(moveValue);
-  } // end for loop
-
-  // Args (player, moveOneType, moveOneValue, moveTwoType, moveTwoValue, moveThreeType, moveThreeValue)
-  setPlayerMoves(...setPlayerMovesArgs);
+  const moveOneType = moveTypes[getRandomInt(3)];
+  const moveTwoType = moveTypes[getRandomInt(3)];
+  const moveThreeType = moveTypes[getRandomInt(3)];
+  const moveOneValue = getRandomInt(96) + 1;
+  const moveTwoValue = getRandomInt(97 - moveOneValue) + 1;
+  const moveThreeValue = 99 - moveOneValue - moveTwoValue;
+  setPlayerMoves('Player Two', moveOneType, moveOneValue, moveTwoType,
+                 moveTwoValue, moveThreeType, moveThreeValue);
 };
 
 const getRandomInt = maxExclusive => Math.floor(Math.random() * maxExclusive)
