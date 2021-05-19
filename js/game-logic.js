@@ -19,12 +19,14 @@ let playerTwoMoveOneValue = undefined;
 let playerTwoMoveTwoValue = undefined;
 let playerTwoMoveThreeValue = undefined;
 
+// For reference in setPlayerMoves and setComputerMoves
+const moveTypes = ['rock', 'paper', 'scissors'];
+
 
 // Game Functions
 
 const setPlayerMoves = (player, moveOneType, moveOneValue, moveTwoType, moveTwoValue, moveThreeType, moveThreeValue) => {
   
-  const moveTypes = ['rock', 'paper', 'scissors'];
   const typeArgs = [moveOneType, moveTwoType, moveThreeType];
   const valueArgs = [moveOneValue, moveTwoValue, moveThreeValue];
   let valueSum = 0;
@@ -186,12 +188,12 @@ const compareValues = (valueOne, valueTwo) => {
 };
 
 const getGameWinner = () => {
-  // uses getRoundWinner for each round to determine game winner
-  // Start counters for player wins
+  // Start counters for player wins, increment each round
   let playerOneWins = 0;
   let playerTwoWins = 0;
   let ties = 0;
-
+  
+  // uses getRoundWinner for each round to determine game winner
   for (let round = 1; round <= 3; round++) {
     let winner = getRoundWinner(round);
     if (winner === 'Player One') {
@@ -214,5 +216,37 @@ const getGameWinner = () => {
   } else {
     return 'Tie';
   }
-
 };
+
+// BONUS: setComputerMoves()
+
+const setComputerMoves = () => {
+  // Sets the move types and values for player two for all 3 rounds
+  const setPlayerMovesArgs = ['Player Two']; 
+  let valueSum = 0;
+
+  for (let round = 1; round <= 3; round++) {
+    // Pick random move type
+    const moveType = moveTypes[getRandomInt(3)]; // rock, paper or scissors (0, 1, or 2 index)
+    // Pick random move value between 1-99
+    let moveValue = getRandomInt(99) + 1; 
+    // increment valueSum and then check if > 99, and while it is, remove that value and try again
+    valueSum += moveValue;
+
+    while (valueSum > 99) {
+      valueSum -= moveValue;
+      // reassign the moveValue if it made valueSum > 99
+      moveValue = getRandomInt(99) + 1; 
+      valueSum += moveValue; 
+    }
+
+    // Every round from 1 - 3 push a move type and value to args array
+    setPlayerMovesArgs.push(moveType);
+    setPlayerMovesArgs.push(moveValue);
+  }
+
+  // Args (player, moveOneType, moveOneValue, moveTwoType, moveTwoValue, moveThreeType, moveThreeValue)
+  setPlayerMoves(...setPlayerMovesArgs);
+};
+
+const getRandomInt = maxExclusive => Math.floor(Math.random() * maxExclusive)
